@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-// Represents a header
+// Represents a heading
 const Header = (props) => {
   return (
     <p> <b>{props.headerText}</b></p>
@@ -85,6 +85,7 @@ const App = (props) => {
   )
 }
 
+// Render
 ReactDOM.render(<App />,
   document.getElementById('root')
 )

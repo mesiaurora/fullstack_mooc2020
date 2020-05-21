@@ -28,12 +28,14 @@ const Button = ({methodName, buttonText}) => {
 // Application
 const App = (props) => {
   const pageHeader = 'Anecdotes'
+  const topVoted = 'Top voted anecdote:'
   const randomButton = 'Random anecdote'
   const voteButton = 'Vote'
-  const topVoted = 'Top voted anecdote:'
 
   const numberOfAnecdotes = anecdotes.length
 
+  // Store index of current random anecdote, number of votes and
+  // the highest voted anecdote
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(new Array(numberOfAnecdotes).fill(0))
   const [highestVoted, setHighest] = useState('')
@@ -53,7 +55,6 @@ const App = (props) => {
     const random = Math.floor(Math.random() * numberOfAnecdotes)
     setSelected(random)
   }
-
 
   return (
     <div>

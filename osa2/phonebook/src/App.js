@@ -1,29 +1,37 @@
 import React, { useState } from 'react'
 import Person from './Components/Person'
+import Persons from './Components/Persons'
+import PersonForm from './Components/PersonForm'
+import SearchFilter from './Components/SearchFilter'
 
 const App = (props) => {
 
-  const containsAlert = ' is already added. Name needs to be unique'
+
   const pageHeader = 'Phonebook'
   const searchHeader = 'Search'
   const addHeader = 'Add a new person'
   const numbersHeader = 'Numbers'
+  const containsAlert = ' is already added. Name needs to be unique'
 
-  const [persons, setPersons] = useState(props.persons)
+  const personsArray = props.persons
+
+  const [searchFilter, setSearchFilter] = useState('')
+  const [persons, setPersons] = useState(personsArray)
   const [newName, setNewName ] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  const [searchFilter, setSearchFilter] = useState('')
+
+  const showFilteredPersons = persons.filter(person => person.name.toLowerCase().includes(searchFilter.toLowerCase()))
 
   const addNewPerson = (event) => {
     event.preventDefault()
 
-    const personObj = {
+    const newPerson = {
       name: newName,
       number: newNumber,
     }
 
-    if (!persons.some(e => e.name === newName)){
-      setPersons(persons.concat(personObj))
+    if (!persons.some(e => e.name.toLowerCase() === newName.toLowerCase())){
+      setPersons(persons.concat(newPerson))
     } else {
       const alert = newName + containsAlert
       window.alert(alert)
@@ -33,46 +41,18 @@ const App = (props) => {
     setNewNumber('')
   }
 
-  const handleNameFieldChange = (event) => {
-    setNewName(event.target.value)
-  }
-
-  const handleNumberFieldChange = (event) => {
-    setNewNumber(event.target.value)
-  }
-
-  const filterNumbers = (event) => {
-    setSearchFilter(event.target.value)
-  }
-
-  const showFilteredPersons = persons.filter(person => person.name.toLowerCase().includes(searchFilter.toLowerCase()))
 
   return (
     <div>
       <h1>{pageHeader}</h1>
       <h2>{searchHeader}</h2>
-        <div>
-          Filter with:
-          <input value={searchFilter} onChange={e => setSearchFilter(e.target.value)}/>
-        </div>
+        <SearchFilter searchFilter={searchFilter} method={e => setSearchFilter(e.target.value)}/>
       <h2>{addHeader}</h2>
-      <form onSubmit={addNewPerson}>
-        <div>
-          Name: <input value={newName} onChange={handleNameFieldChange}/>
-        </div>
-        <div>
-          Number: <input value={newNumber} onChange={handleNumberFieldChange}/>
-        </div>
-        <div>
-          <button type="submit" >Add</button>
-        </div>
-      </form>
+        <PersonForm persons={persons}
+            newNameMethod={e => setNewName(e.target.value)} newNumberMethod={e => setNewNumber(e.target.value)}
+            newName={newName} newNumber={newNumber} addNewPerson={addNewPerson}/>
       <h2>{numbersHeader}</h2>
-      <ul>
-        {showFilteredPersons.map((person) =>
-          <Person key={person.name} person={person}/>
-        )}
-      </ul>
+        <Persons persons={showFilteredPersons} filter={searchFilter}/>
     </div>
   )
 

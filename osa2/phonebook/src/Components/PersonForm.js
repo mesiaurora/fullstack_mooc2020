@@ -1,47 +1,17 @@
-import React, { useState } from 'react'
-
-
+import React from 'react'
 
 const PersonForm = (props) => {
 
-  const persons = props.persons
-  const [newName, setNewName ] = useState('')
-  const [newNumber, setNewNumber] = useState('')
-
-  const addNewPerson = (event) => {
-    event.preventDefault()
-
-    const personObj = {
-      name: newName,
-      number: newNumber,
-    }
-
-    if (!persons.some(e => e.name === newName)){
-      setPersons(persons.concat(personObj))
-    } else {
-      const alert = newName + containsAlert
-      window.alert(alert)
-    }
-
-    setNewName('')
-    setNewNumber('')
-  }
-
-  const handleNameFieldChange = (event) => {
-    setNewName(event.target.value)
-  }
-
-  const handleNumberFieldChange = (event) => {
-    setNewNumber(event.target.value)
-  }
+  const newNumber = props.newNumber
+  const newName = props.newName
 
   return (
-    <form onSubmit={addNewPerson}>
+    <form onSubmit={props.addNewPerson}>
       <div>
-        Name: <input value={newName} onChange={handleNameFieldChange}/>
+        Name: <input value={newName} onChange={props.newNameMethod}/>
       </div>
       <div>
-        Number: <input value={newNumber} onChange={handleNumberFieldChange}/>
+        Number: <input value={newNumber} onChange={props.newNumberMethod}/>
       </div>
       <div>
         <button type="submit" >Add</button>

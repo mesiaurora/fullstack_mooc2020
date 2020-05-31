@@ -1,24 +1,31 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Person from './Components/Person'
 import Persons from './Components/Persons'
 import PersonForm from './Components/PersonForm'
 import SearchFilter from './Components/SearchFilter'
+import axios from 'axios'
 
-const App = (props) => {
-
-
+const App = () => {
   const pageHeader = 'Phonebook'
   const searchHeader = 'Search'
   const addHeader = 'Add a new person'
   const numbersHeader = 'Numbers'
   const containsAlert = ' is already added. Name needs to be unique'
 
-  const personsArray = props.persons
-
   const [searchFilter, setSearchFilter] = useState('')
-  const [persons, setPersons] = useState(personsArray)
+  const [persons, setPersons] = useState([])
   const [newName, setNewName ] = useState('')
   const [newNumber, setNewNumber] = useState('')
+
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        setPersons(response.data)
+      })
+  }, [])
 
   const showFilteredPersons = persons.filter(person => person.name.toLowerCase().includes(searchFilter.toLowerCase()))
 

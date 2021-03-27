@@ -1,0 +1,56 @@
+useEffect(() => {
+  console.log('effect')
+  axios
+    .get('https://restcountries.eu/rest/v2/name/countryName')
+    .then(response => {
+      console.log('promise fulfilled')
+      setCountries(response.data)
+    })
+}, [])
+
+
+
+
+
+
+if (filteredCountries.length === 1) {
+  showSingleCountryInfo(filteredCountries[0])
+}
+else
+
+
+
+
+
+
+  // Create countryInfo when filter only shows one country
+  const showSingleCountryInfo = (country) => {
+    const selectedCountry = country
+    countryContent = <CountryInfo name={selectedCountry.name} population={selectedCountry.population}
+                        languages={selectedCountry.languages} capital={selectedCountry.capital}
+                        flag={selectedCountry.flag}/>
+  }
+
+
+
+
+  <b>Temperature: </b> {weather.current.temperature}
+  <b>Wind: </b> {weather.current.wind_speed}
+  <img src={weather.current.weather_icons[0]} alt="Flag" width="100px" height="100px" />
+
+
+  <b>Wind: </b> {weather.current.wind_speed}
+  <img src={weather.current.weather_icons[0]} alt="Flag" width="100px" height="100px" />
+
+
+
+
+
+  axios({
+    url: 'http://api.weatherstack.com/current',
+    method: 'get',
+    data: {
+      query: {city}
+    }
+    console.log(response)
+  })
